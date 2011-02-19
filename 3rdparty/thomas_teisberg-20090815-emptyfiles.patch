@@ -1,0 +1,15 @@
+--- php-directory-listing-0.3.2/DirectoryListing.class.php.old  2009-07-17 23:06:27.000000000 -0400
++++ php-directory-listing-0.3.2/DirectoryListing.class.php  2009-08-14 18:22:18.000000000 -0400
+@@ -126,7 +126,11 @@
+           case 'pl':
+           case 'asp':
+           $fh = fopen($file, 'r');
+-          if ($fh) $href .= '<code class="txt">'.substr(fread($fh, filesize($file)), 0, $this->max_content_length).'</code>';
++          if(filesize($file)!=0){ // if file is NOT empty
++            if ($fh) $href .= '<code class="txt">'.substr(fread($fh, filesize($file)), 0, $this->max_content_length).'</code>';
++          }else{ // if file is empty
++           if($this->max_content_length>=12) $href .= '<code class="txt"><i>[empty file]</i></code>';
++          }
+           break;
+           
+           case 'pdf':
