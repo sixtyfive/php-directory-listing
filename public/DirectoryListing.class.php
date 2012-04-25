@@ -29,12 +29,13 @@
       "visible.css",
       "hidden.css",
       "index.css",
+      "thirdparty",
       "icons",
       ".icons" // ,
                // ".???"
     );
 
-    var $FILETYPE_ICON_PATH = '.icons';
+    var $FILETYPE_ICON_PATH = 'icons';
 
     var $_filetype_icon_path;
 
@@ -105,8 +106,25 @@
     function href($file, $url)
     {
       $type = $this->type($file);
+      $href = '<table class="thumbnail"><tr><td>';
       
-      $href = '<table class="thumbnail"><tr><td><a href="'.rawurlencode($file).'">';
+      $fancybox_tag = FALSE;
+      if (!is_dir($file)) {
+        switch(strtolower($type)) {
+          case 'jpg':
+          case 'png':
+          case 'gif':
+          case 'jpeg':
+          case 'jpe':
+          $fancybox_tag = TRUE;
+          break;
+        }
+      }; if ($fancybox_tag == TRUE) {
+        $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'">';
+      } else {
+        $href .= '<a href="'.rawurlencode($file).'">';
+      }
+
       if (is_dir($file)) {
         $href .= '<img src="'.$url.$this->filetype_icon_path.'directory.png" alt="'.$file.'"/>';
       } else {
@@ -178,7 +196,7 @@
       else if ($type) $type = '.'.$type;
       $href .= '<a href="'.rawurlencode($file).'">';
       $href .= $link_text.$type."</a>"; 
-      if (is_dir($file)) $href .= "/</a>";
+      if (is_dir($file)) $href .= "</a>";
       
       return $href;
     }
