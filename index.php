@@ -42,7 +42,7 @@ Do copy, share and modify!
         nextEffect: 'none',
         closeBtn: false,
         helpers: {
-          overlay: {opacity: 0.8, css: {'background-color': '#000'}},
+          overlay: {opacity: 0.95, css: {'background-color': '#000'}},
         }
       });
     });
@@ -59,6 +59,10 @@ Do copy, share and modify!
   
   require_once path(__FILE__).'DirectoryListing.class.php'; 
   new DirectoryListing(getcwd(), $url); 
+
+  if (is_file('README.txt')) {
+    echo "<pre>\n"; require 'README.txt'; echo "</pre>\n";
+  }
   ?>
 </body>
 </html>

@@ -17,6 +17,7 @@
     var $EXCLUDE_FILES = array(
       ".",
       "..",
+      "README.txt",
       ".htaccess",
       ".thumbnails",
       "index.php",

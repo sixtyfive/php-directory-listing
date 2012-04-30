@@ -59,3 +59,15 @@ td {
   text-align: left;
   padding: 5px;
 }
+
+pre {
+  margin: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #ccc;
+}
+
+.fancybox-skin {
+  -webkit-border-radius: 0;
+     -moz-border-radius: 0;
+          border-radius: 0;
+}

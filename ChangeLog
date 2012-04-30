@@ -1,5 +1,11 @@
+0.3.5
+=====
+* If there is a file "README.txt" present, its content will be shown inside a <pre>-Tag below the directory content.
 * Integrated jQuery Fancybox to show PNGs, JPGs and GIFs when they're clicked.
 * Removing trailing slash from folder names as it messed up the layout sometimes (and they're not really necessary since folders have their own icon anyway).
+
+0.3.4
+=====
 * Properly escaping content of HTML files.
 * New variable $url in index.php which you can set to where PHP Directory Listing is installed. Then using it for a certain directory becomes as easy as simpling softlinking index.php into that directory.
 * Changed empty file marker "[empty file]" into an m-dash to maintain language agnosticism.
