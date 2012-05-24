@@ -31,6 +31,8 @@
       "hidden.css",
       "index.css",
       "thirdparty",
+      "background.mp3",
+      "background.jpg",
       "icons",
       ".icons" // ,
                // ".???"
@@ -49,11 +51,12 @@
     function DirectoryListing(
       $path,
       $url = '',
+      $filenames = 'inline',
       $width = 75,
       $height = NULL, 
       $max_filename_length = 8,
       $max_content_length = 60,
-      $quality = 75
+      $quality = 85
     )  {
       $this->filetype_icon_path = $this->FILETYPE_ICON_PATH.$this->pd();
       $this->thumbnail_width = $width;
@@ -61,7 +64,7 @@
       $this->max_filename_length = $max_filename_length;
       $this->max_content_length = $max_content_length;
       $this->thumbnail_quality = $quality;
-      $dir_handle = @opendir($path) or die("Unable to open $path");
+      $dir_handle = opendir($path) or die("Unable to open $path");
       $cnt = 0;
       $dirs = array();
       $files = array();
@@ -107,7 +110,7 @@
     function href($file, $url)
     {
       $type = $this->type($file);
-      $href = '<table class="thumbnail"><tr><td>';
+      $href = '<div class="thumbnail"><div class="rightlimit"></div><div class="bottomlimit"></div>';
       
       $fancybox_tag = FALSE;
       if (!is_dir($file)) {
@@ -121,9 +124,9 @@
           break;
         }
       }; if ($fancybox_tag == TRUE) {
-        $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'">';
+        $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'" title="'.$file.'">';
       } else {
-        $href .= '<a href="'.rawurlencode($file).'">';
+        $href .= '<a href="'.rawurlencode($file).'" title="'.$file.'">';
       }
 
       if (is_dir($file)) {
@@ -183,21 +186,24 @@
           break;
         }
       }
-      $href .= '</a></td></tr></table>';
-      $words = $this->words(substr($file, 0, $this->max_filename_length));
-      $underscore = '<span class="hidden">_</span>';
-      $cnt = 0;
-      $link_text = '';
-      foreach ($words as $word) {
-        if ($cnt++ > 0)  $link_text .= $underscore;
-        $link_text .= $word;
+      $href .= '</a></div>';
+
+      if ($filename == 'inline') {
+        $words = $this->words(substr($file, 0, $this->max_filename_length));
+        $underscore = '<span class="hidden">_</span>';
+        $cnt = 0;
+        $link_text = '';
+        foreach ($words as $word) {
+          if ($cnt++ > 0)  $link_text .= $underscore;
+          $link_text .= $word;
+        }
+        if ($type) $type = '<span class="hidden">'.$type.'</span>';
+        if (strlen($file) > $this->max_filename_length) $type = '&hellip;'.$type;
+        else if ($type) $type = '.'.$type;
+        $href .= '<a href="'.rawurlencode($file).'">';
+        $href .= $link_text.$type."</a>"; 
+        if (is_dir($file)) $href .= "</a>";
       }
-      if ($type) $type = '<span class="hidden">'.$type.'</span>';
-      if (strlen($file) > $this->max_filename_length) $type = '&hellip;'.$type;
-      else if ($type) $type = '.'.$type;
-      $href .= '<a href="'.rawurlencode($file).'">';
-      $href .= $link_text.$type."</a>"; 
-      if (is_dir($file)) $href .= "</a>";
       
       return $href;
     }
