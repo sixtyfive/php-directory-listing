@@ -38,7 +38,7 @@ Do copy, share and modify!
       $url.'thirdparty/jquery-1.7.2.min.js',
       $url.'thirdparty/jquery.mousewheel-3.0.6.pack.js',
       $url.'thirdparty/fancybox/jquery.fancybox.pack.js?v=2.0.6',
-      $url.'thirdparty/soundmanager2/script/soundmanager2.js'
+      $url.'thirdparty/soundmanager2/script/soundmanager2-nodebug-jsmin.js'
     ); foreach ($js_files as $js_file) {
       echo '<script type="text/javascript" src="'.$js_file.'"></script>'."\n";
     }
@@ -118,7 +118,9 @@ Do copy, share and modify!
     ?>
   </div>
   <div id="controls"></div>
-  <img src="<?php echo $url.'icons/pause.png'; ?>" id="playpause" />
-  <div id="songtitle"></div>
+  <?php if (is_file('background.mp3')) { ?>
+    <img src="<?php echo $url.'icons/pause.png'; ?>" id="playpause" />
+    <div id="songtitle"></div>
+  <?php } ?>
 </body>
 </html>

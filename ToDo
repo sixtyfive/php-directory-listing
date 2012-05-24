@@ -1,0 +1,3 @@
+* Only use gallery interface when background music is present
+* Only try to use background image if present
+* Make everything configurable per directory (perhaps a config.php which is not linked but copied)
