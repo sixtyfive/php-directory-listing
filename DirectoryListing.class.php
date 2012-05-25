@@ -10,7 +10,6 @@
    * Additions in functionality by Andreas Aronsson <aron@aron.nu>.
    ***/
 
-  error_reporting(E_ALL);
   require_once path(__FILE__).'Thumbnail.class.php'; 
   
   class DirectoryListing {
@@ -31,6 +30,7 @@
       "hidden.css",
       "index.css",
       "thirdparty",
+      "config.ini",
       "background.mp3",
       "background.jpg",
       "icons",
@@ -96,21 +96,25 @@
 
       foreach ($files as $file) {
         if (! in_array($file, $this->EXCLUDE_FILES)) {        
-          echo "  <div class=\"item\" id=\"file_"
+          echo "<div class=\"item\" id=\"file_"
                .preg_replace('/(\+|\%)/', '_', urlencode($file))
                ."\">"
-               .$this->href($file, $url)
+               .$this->href($file, $url, $filenames)
                ."</div>\n";
         }
       }
       
       @closedir($dir_handle);
+     
+      // Print contents of README.txt file if present. 
+      if (is_file('README.txt')) {
+        echo "<pre>\n"; require 'README.txt'; echo "</pre>\n";
+      }
     }
 
-    function href($file, $url)
+    function href($file, $url, $filenames)
     {
       $type = $this->type($file);
-      $href = '<div class="thumbnail"><div class="rightlimit"></div><div class="bottomlimit"></div>';
       
       $fancybox_tag = FALSE;
       if (!is_dir($file)) {
@@ -124,8 +128,10 @@
           break;
         }
       }; if ($fancybox_tag == TRUE) {
+        $href = '<div class="thumbnail image"><div class="rightlimit"></div><div class="bottomlimit"></div>';
         $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'" title="'.$file.'">';
       } else {
+        $href = '<div class="thumbnail icon"><div class="rightlimit"></div><div class="bottomlimit"></div>';
         $href .= '<a href="'.rawurlencode($file).'" title="'.$file.'">';
       }
 
@@ -188,7 +194,7 @@
       }
       $href .= '</a></div>';
 
-      if ($filename == 'inline') {
+      if ($filenames == 'inline') {
         $words = $this->words(substr($file, 0, $this->max_filename_length));
         $underscore = '<span class="hidden">_</span>';
         $cnt = 0;
