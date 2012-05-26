@@ -3,6 +3,8 @@
 * Adding controls bar at page bottom.
 * Adding background music player to controls bar.
 * Moving previous/next buttons to controls bar.
+* Adding slideshow start/stop buttons and close button to controls bar.
+* Introducing config.ini file (can be both global or local) for configuring the gallery view and some other settings.
 
 0.3.5
 =====
