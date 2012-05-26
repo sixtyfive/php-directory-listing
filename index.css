@@ -1,15 +1,9 @@
-html {
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
 body {
   background-color: transparent;
   font-family: monospace;
   font-size: 9pt;
   padding: 0 0 0 15px;
+  margin: 0;
 }
 
 a {

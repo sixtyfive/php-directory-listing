@@ -16,18 +16,18 @@
 
 .fancybox-prev,
 .fancybox-next {
-  display: block;
-  position: fixed;
+  display: none;
+  /*position: fixed;
   left: auto;
   top: auto;
   padding: 0;
   margin: 0;
   bottom: 20px;
   width: auto;
-  height: auto;
+  height: auto;*/
 }
 
-.fancybox-prev,
+/*.fancybox-prev,
 .fancybox-prev span,
 .fancybox-next,
 .fancybox-next span {
@@ -45,6 +45,18 @@
 .fancybox-prev span,
 .fancybox-next span {
   visibility: visible;
+}*/
+
+div#fancybox-buttons.top {
+  width: auto;
+  top: auto;
+  left: auto;
+  bottom: 5px;
+  right: 10px;
+}
+
+div#fancybox-buttons ul {
+  width: 132px;
 }
 
 div#controls {
@@ -63,13 +75,13 @@ img#playpause {
   cursor: pointer;
   position: fixed;
   bottom: 4px;
-  left: 20px;
+  left: 10px;
 }
 
 div#songtitle {
   z-index: 8031;
   bottom: 11px;
-  left: 60px;
+  left: 50px;
   position: fixed;
   font: 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
   color: #fff;

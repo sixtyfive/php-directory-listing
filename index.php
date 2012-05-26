@@ -24,9 +24,9 @@
       }
     }
 
-    public function getConfig($setting)
+    public function getConfig($section, $setting)
     {
-      return $this->config['general'][$setting];
+      return $this->config[$section][$setting];
     }
 
     public function PDL($config_file = 'config.ini')
@@ -45,12 +45,16 @@
     public function title()
     {
       preg_match('!(?:.*://[^/]*)?([^/?]*)/?(?:/[^/?]+\.[^/?]+)?(?:\?.*)?$!', $_SERVER['REQUEST_URI'], $matches); 
-  
-      if ($this->getConfig('title') == 'titlecase') {
+ 
+      $titlesetting = $this->getConfig('general', 'title');
+
+      if ($titlesetting == 'titlecase') {
         require_once path(__FILE__).'thirdparty/strtotitle.function.php';
         $title = ($matches[1] ? strtotitle(preg_replace('/\-/', ' ', $matches[1])) : '-');
-      } else {
+      } elseif ($titlesetting == 'dirname') {
         $title = ($matches[1] ? $matches[1] : '/');
+      } else {
+        $title = $titlesetting; 
       }
   
       return $title;
@@ -62,6 +66,7 @@
   
       $css_files = array(
         $this->url().'thirdparty/fancybox/jquery.fancybox.css?v=2.0.6',
+        $this->url().'thirdparty/fancybox/helpers/jquery.fancybox-buttons.css',
         $this->url().'index.css'
       ); 
       
@@ -84,6 +89,7 @@
         $this->url().'thirdparty/jquery-1.7.2.min.js',
         $this->url().'thirdparty/jquery.mousewheel-3.0.6.pack.js',
         $this->url().'thirdparty/fancybox/jquery.fancybox.pack.js?v=2.0.6',
+        $this->url().'thirdparty/fancybox/helpers/jquery.fancybox-buttons.js',
         $this->url().'thirdparty/soundmanager2/script/soundmanager2-nodebug-jsmin.js'
       ); foreach ($js_files as $js_file) {
         $retval .= '<script type="text/javascript" src="'.$js_file.'"></script>'."\n  ";
