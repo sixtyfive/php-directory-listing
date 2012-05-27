@@ -1,4 +1,4 @@
-<?
+<?php
   /***
    * php-directory-listing, version 0.3.0
    * Copyright (C) 2005 and onwards, Raphael J. Schmid <rjs@schattenschreiber.org>

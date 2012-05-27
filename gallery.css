@@ -80,7 +80,7 @@ img#playpause {
 
 div#songtitle {
   z-index: 8031;
-  bottom: 11px;
+  bottom: 10px;
   left: 50px;
   position: fixed;
   font: 13px/20px "Helvetica Neue",Helvetica,Arial,sans-serif;
