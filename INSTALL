@@ -1,0 +1,27 @@
+LigHTTPd:
+=========
+
+- Unpack somewhere outside of your webroot, i.e. /srv/http/php-directory-listing 
+  if /srv/http/public_html is your webroot.
+
+- Only if you cloned via Git: don't forget to do "git submodule init" and "git
+  submodule update" in order to get the thirdparty components!
+
+- Copy config.ini.template to config.ini and change according to your needs.
+  This will be the global configuration file.
+- In every subdirectory of your webroot that you want served with PHP Directory
+  Listing, create a symlink to index.php. In the above example, say you want
+  /srv/http/public_html/mydomain.com/pictures to be a directory listing, cd into
+  that directory and then "ln -s /srv/http/php-directory-listing/index.php".
+
+- If a directory needs different settings from what is set in the global 
+  config.ini, copy config.ini into that directory (it won't be shown) and change
+  the copy's settings accordingly. Be careful with permissions!
+
+Apache:
+=======
+
+Unfortunately I do not run PHP Directory Listing with Apache, so I don't know if
+it will work similarly or differently from how it can be setup with LigHTTPd. If
+you would like to write the instructions for this section, I'd be happy to put
+them here!

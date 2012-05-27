@@ -5,6 +5,11 @@
 * Moving previous/next buttons to controls bar.
 * Adding slideshow start/stop buttons and close button to controls bar.
 * Introducing config.ini file (can be both global or local) for configuring the gallery view and some other settings.
+* Refactored some more to improve code understandability.
+* Made Google Analytics configurable through config.ini.
+* Some minor cosmetic improvements.
+* Fixed bugs pertaining to clearer separation between the two user interface variants.
+* Wrote INSTALL file to help people setting up PHP Directory Listing on their servers.
 
 0.3.5
 =====
