@@ -65,7 +65,7 @@
         $this->url().'index.css'
       ); 
       
-      if (is_file('background.mp3')) {
+      if ($this->getConfig('general', 'interface') == 'gallery') {
         $css_files[] = $this->url().'gallery.css';
       }
 
