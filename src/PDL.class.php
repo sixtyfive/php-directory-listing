@@ -18,7 +18,7 @@
 
     protected function setConfig($config_file)
     {
-      if (!$this->config = parse_ini_file(path(__FILE__).$config_file, TRUE)) throw new exception('Unable to open '.$config_file.'.');
+      if (!$this->config = parse_ini_file(path(__FILE__).'..'.pd().$config_file, TRUE)) throw new exception('Unable to open '.$config_file.'.');
       if (is_file($config_file)) {
         if (!$this->config = parse_ini_file($config_file, TRUE)) throw new exception('Unable to open '.$config_file.'.');
       }
@@ -44,7 +44,7 @@
       $titlesetting = $this->getConfig('general', 'title');
 
       if ($titlesetting == 'titlecase') {
-        require_once path(__FILE__).'thirdparty/strtotitle.function.php';
+        require_once path(__FILE__).'src'.pd().'thirdparty'.pd().'strtotitle.function.php';
         $title = ($matches[1] ? strtotitle(preg_replace('/\-/', ' ', $matches[1])) : '-');
       } elseif ($titlesetting == 'dirname') {
         $title = ($matches[1] ? utf8_urldecode($matches[1]) : '/');
@@ -62,11 +62,11 @@
       $css_files = array(
         $this->url().'thirdparty/fancybox/jquery.fancybox.css?v=2.0.6',
         $this->url().'thirdparty/fancybox/helpers/jquery.fancybox-buttons.css',
-        $this->url().'index.css'
+        $this->url().'src/index.css'
       ); 
       
       if ($this->getConfig('general', 'interface') == 'gallery') {
-        $css_files[] = $this->url().'gallery.css';
+        $css_files[] = $this->url().'src/gallery.css';
       }
 
       foreach ($css_files as $css_file) {

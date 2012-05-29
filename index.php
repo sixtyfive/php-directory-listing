@@ -6,15 +6,20 @@
  
   error_reporting(E_ALL);
 
-  function path($file)
+  function pd()
   {
     $OS = strtolower(substr(PHP_OS, 0, 3));
     $OS == 'win' ? $PD = '\\' : $PD = '/';
-    return dirname($file).$PD;
+    return $PD;
+  }
+
+  function path($file)
+  {
+    return dirname($file).pd();
   }
     
-  require_once path(__FILE__).'PDL.class.php';
+  require_once path(__FILE__).'src'.pd().'PDL.class.php';
   $pdl = new PDL('config.ini');
 
-  require_once path(__FILE__).'html.php';
+  require_once path(__FILE__).'src'.pd().'html.php';
 ?>

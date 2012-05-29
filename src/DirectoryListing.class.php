@@ -58,7 +58,7 @@
       $max_content_length = 60,
       $quality = 85
     )  {
-      $this->filetype_icon_path = $this->FILETYPE_ICON_PATH.$this->pd();
+      $this->filetype_icon_path = $this->FILETYPE_ICON_PATH.pd();
       $this->thumbnail_width = $width;
       $this->thumbnail_height = $height;
       $this->max_filename_length = $max_filename_length;
@@ -233,13 +233,6 @@
   
       else
       return false;
-    }
-    
-    function pd()
-    {
-      $OS = strtolower(substr(PHP_OS, 0, 3));
-      $OS == 'win' ? $PD = '\\' : $PD = '/';
-      return $PD;
     }
   }
 ?>
