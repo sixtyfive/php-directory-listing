@@ -62,11 +62,11 @@
       $css_files = array(
         $this->url().'thirdparty/fancybox/jquery.fancybox.css?v=2.0.6',
         $this->url().'thirdparty/fancybox/helpers/jquery.fancybox-buttons.css',
-        $this->url().'src/index.css'
+        $this->url().'css/index.css'
       ); 
       
       if ($this->getConfig('general', 'interface') == 'gallery') {
-        $css_files[] = $this->url().'src/gallery.css';
+        $css_files[] = $this->url().'css/gallery.css';
       }
 
       foreach ($css_files as $css_file) {
