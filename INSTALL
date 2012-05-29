@@ -7,8 +7,14 @@ LigHTTPd:
 - Only if you cloned via Git: don't forget to do "git submodule init" and "git
   submodule update" in order to get the thirdparty components!
 
+- Create a publicly accessible directory inside your webroot and link src, icons
+  and thirdparty into it. For protection, it might be wise to add an empty
+  index.html, too.
+
 - Copy config.ini.template to config.ini and change according to your needs.
-  This will be the global configuration file.
+  This will be the global configuration file. You will have to at least enter
+  the URL to the directory created in the last step here.
+
 - In every subdirectory of your webroot that you want served with PHP Directory
   Listing, create a symlink to index.php. In the above example, say you want
   /srv/http/public_html/mydomain.com/pictures to be a directory listing, cd into
