@@ -1,6 +1,7 @@
 <script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount','UA-30932255-1']);
+  _gaq.push(['_setAccount','<?php echo $pdl->getConfig('google_analytics', 'account_id'); ?>']);
+  _gaq.push(['_gat._anonymizeIp']);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
