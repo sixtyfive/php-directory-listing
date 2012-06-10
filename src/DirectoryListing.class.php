@@ -167,6 +167,7 @@
           case 'tex':
           case 'po':
           case 'conf':
+          case 'md':
           $fh = fopen($file, 'r');
           if (filesize($file)!= 0) { // If file is NOT empty.
             if ($fh) $href .= '<code class="txt">'.htmlspecialchars(substr(fread($fh, filesize($file)), 0, $this->max_content_length)).'</code>';

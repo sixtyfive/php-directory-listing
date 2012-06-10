@@ -30,12 +30,14 @@
     <div id="content">
       <?php new DirectoryListing(getcwd(), $pdl->url(), $pdl->getConfig('general', 'filenames')); ?>
     </div>
-    <?php if ($pdl->getConfig('general', 'interface') == 'gallery' && is_file('background.mp3')) { ?>
+    <?php if ($pdl->getConfig('general', 'interface') == 'gallery') { ?>
       <div id="controls"></div>
-      <?php if ($pdl->getConfig('gallery', 'backgroundmusic_autostart')) { ?>
-        <img src="<?php echo $pdl->url().'icons/pause.png'; ?>" id="playpause" />
-      <?php } else { ?>
-        <img src="<?php echo $pdl->url().'icons/play.png'; ?>" id="playpause" />
+      <?php if (is_file('background.mp3')) { ?>
+        <?php if ($pdl->getConfig('gallery', 'backgroundmusic_autostart')) { ?>
+          <img src="<?php echo $pdl->url().'icons/pause.png'; ?>" id="playpause" />
+        <?php } else { ?>
+          <img src="<?php echo $pdl->url().'icons/play.png'; ?>" id="playpause" />
+        <?php } ?>
       <?php } ?>
       <div id="songtitle"></div>
     <?php } ?>

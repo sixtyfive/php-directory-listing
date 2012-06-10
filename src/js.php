@@ -37,7 +37,7 @@
         id: 'backgroundMusic',
         url: 'background.mp3',
         onid3: function() {
-          $('#songtitle').html(this.id3['TPE2'] + ' - ' + this.id3['TIT2']);
+          $('#songtitle').html(this.id3['TPE1'] + ' - ' + this.id3['TIT2']);
         },
         onfinish: function() {
           $('#playpause').attr('src', '<?php echo $pdl->url().'icons/play.png'; ?>');
