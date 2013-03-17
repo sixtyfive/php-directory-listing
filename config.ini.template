@@ -16,6 +16,9 @@ filenames = inline
 ; Options: 'minimal' (default) or 'gallery'.
 interface = minimal
 
+; Options: 'download' (default) or 'true'.
+download = false
+
 [gallery]
 slideshow_autostart = false
 backgroundmusic_autostart = false
