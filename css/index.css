@@ -1,5 +1,5 @@
 body {
-  background-color: transparent;
+  background-color: #EDEDED;
   font-family: monospace;
   font-size: 9pt;
   padding: 0 0 0 15px;
@@ -92,6 +92,17 @@ div.thumbnail.icon img {
   display: inline-block;
   text-align: left;
   padding: 5px;
+}
+
+#download {
+    padding: 0;
+}
+
+#download img {
+    display: block;
+    left: 50%;
+    margin: 0 0 5px -30px;
+    position: relative;
 }
 
 pre {

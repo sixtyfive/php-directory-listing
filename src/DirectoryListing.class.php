@@ -7,10 +7,12 @@
    *
    * Do copy, share and modify!
    * 
-   * Additions in functionality by Andreas Aronsson <aron@aron.nu>.
+   * Additions in functionality by
+   * - Andreas Aronsson <aron@aron.nu>
+   * - Arndt von Lucadou <info@lucadou.net>
    ***/
 
-  require_once path(__FILE__).'Thumbnail.class.php'; 
+  require_once path(__FILE__).'Thumbnail.class.php';
   
   class DirectoryListing {
     var $EXCLUDE_FILES = array(
@@ -19,6 +21,8 @@
       "README.txt",
       ".htaccess",
       ".thumbnails",
+      ".DS_Store",
+      ".htaccess",
       "index.php",
       "dir-generator.php",
       "file.php",
@@ -29,13 +33,16 @@
       "visible.css",
       "hidden.css",
       "index.css",
+      "css",
+      "icons",
+      "src",
       "thirdparty",
       "config.ini",
       "background.mp3",
       "background.jpg",
-      "icons",
-      ".icons" // ,
-               // ".???"
+      ".icons",
+      ".zip" // ,
+            // ".???"
     );
 
     var $FILETYPE_ICON_PATH = 'icons';
@@ -52,6 +59,9 @@
       $path,
       $url = '',
       $filenames = 'inline',
+      $title,
+      $download = false,
+      $caption = 'download all files',
       $width = 75,
       $height = NULL, 
       $max_filename_length = 8,
@@ -105,6 +115,18 @@
       }
       
       @closedir($dir_handle);
+
+      // create zip archive from the whole folder
+      if($download) {
+        $this->zipDir($path, '.zip'.pd().$title.'.zip');
+        echo '
+        <div id="download" class="item">
+          <a title="'.$title.'.zip" href=".zip'.pd().$title.'.zip">
+            <img alt="'.$title.'.zip" src="http://localhost/imglisting/icons/download.png">
+            '.$caption.'
+          </a>
+        </div>';
+      }
      
       // Print contents of README.txt file if present. 
       if (is_file('README.txt')) {
@@ -145,7 +167,7 @@
           case 'jpeg':
           case 'jpe':
           $tn = new Thumbnail($file, $this->thumbnail_width, $this->thumbnail_height, $this->thumbnail_quality);
-          if ($tn) $href .= '<img src="'.rawurlencode($tn->getPath()).'" alt="'.$file.'"/>';
+          if ($tn) $href .= '<img src="'.str_replace('%2F', '/', rawurlencode($tn->getPath())).'" alt="'.$file.'"/>';
           break;
   
           case 'txt':
@@ -182,14 +204,15 @@
             exec("gs -q -dNOPAUSE -dBATCH -sDEVICE=jpeg -sOutputFile=\"$output\" \"$file\"");
             exec("convert -resize 50x75 \"$output\" \"$output\"");
           }  
-          $href .= '<img src="'.rawurlencode($output).'" alt="'.$file.'"/>';
+          $href .= '<img src="'.str_replace('%2F', '/', rawurlencode($output)).'" alt="'.$file.'"/>';
           break;
   
           default:
           $href .= '<img src="'.$url.$this->filetype_icon_path;
-          if (is_file(path(__FILE__).$this->filetype_icon_path.$type.'.png')) $href .= $type;
-          else $href .= 'unknown';
-          $href .= '.png" alt="?"/>';
+          if (is_file(path(__FILE__).'..'.pd().$this->filetype_icon_path.$type.'.png'))
+            $href .= $type.'.png" alt="'.$file.'"/>';
+          else
+            $href .= 'unknown.png" alt="?"/>';
           break;
         }
       }
@@ -230,10 +253,51 @@
       $chunks = explode('.', trim($file));
   
       if (count($chunks) > 1)
-      return array_pop($chunks);
+        return array_pop($chunks);
   
       else
-      return false;
+        return false;
+    }
+
+    // hat tip to Alix Axel (http://stackoverflow.com/a/1334949/1106393)
+    function zipDir($source, $destination)
+    {
+      if (!extension_loaded('zip'))
+        return false;
+
+      if (file_exists($destination))
+        return true;
+
+      if (! file_exists(dirname($destination)))
+        mkdir (dirname($destination), 0777);
+
+      $zip = new ZipArchive();
+      if (!$zip->open($destination, ZIPARCHIVE::CREATE)) {
+        return false;
+      }
+
+      $source = str_replace('\\', '/', realpath($source));
+      $files = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($source), RecursiveIteratorIterator::SELF_FIRST);
+
+      foreach ($files as $file) {
+        $file = str_replace('\\', '/', $file);
+
+        // Ignore EXCLUDE_FILES
+        if(in_array(substr($file, strrpos($file, '/')+1), $this->EXCLUDE_FILES) ||
+          strpos($file, '/.thumbnails/') ||
+          strpos($file, '/.zip/'))
+          continue;
+
+        $file = realpath($file);
+
+        if (is_dir($file) === true) {
+          $zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+        } else if (is_file($file) === true) {
+          $zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+        }
+      }
+
+      return $zip->close();
     }
   }
 ?>
