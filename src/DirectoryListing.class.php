@@ -123,7 +123,7 @@
         echo '
         <div id="download" class="item">
           <a title="'.$title.'.zip" href=".zip'.pd().$title.'.zip">
-            <img alt="'.$title.'.zip" src="http://localhost/imglisting/icons/download.png">
+            <img alt="'.$title.'.zip" src="'.$url.$this->filetype_icon_path.'download.png">
             '.$caption.'
           </a>
         </div>';

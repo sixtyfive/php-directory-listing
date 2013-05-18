@@ -10,11 +10,7 @@
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<<<<<<< HEAD
     <title><?php echo utf8_encode($pdl->title()); ?></title>
-=======
-    <title><?php echo $pdl->title(); ?></title>
->>>>>>> b29bdd6e805a68b17bdf9547d765c0eb0e4315e5
     <?php echo $pdl->stylesheet_link_tags(); ?>
     <?php echo $pdl->javascript_include_tags(); ?>
     <?php if ($pdl->getConfig('general', 'interface') == 'gallery') { ?>
