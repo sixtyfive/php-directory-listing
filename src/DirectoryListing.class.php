@@ -33,6 +33,7 @@
       "config.ini",
       "background.mp3",
       "background.jpg",
+      "private",
       "icons",
       ".icons" // ,
                // ".???"
@@ -115,6 +116,7 @@
     function href($file, $url, $filenames)
     {
       $type = $this->type($file);
+      $title = htmlspecialchars($file);
       
       $fancybox_tag = FALSE;
       if (!is_dir($file)) {
@@ -129,14 +131,14 @@
         }
       }; if ($fancybox_tag == TRUE) {
         $href = '<div class="thumbnail image"><div class="rightlimit"></div><div class="bottomlimit"></div>';
-        $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'" title="'.$file.'">';
+        $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'" title="'.$title.'">';
       } else {
         $href = '<div class="thumbnail icon"><div class="rightlimit"></div><div class="bottomlimit"></div>';
-        $href .= '<a href="'.rawurlencode($file).'" title="'.$file.'">';
+        $href .= '<a href="'.rawurlencode($file).'" title="'.$title.'">';
       }
 
       if (is_dir($file)) {
-        $href .= '<img src="'.$url.$this->filetype_icon_path.'directory.png" alt="'.$file.'"/>';
+        $href .= '<img src="'.$url.$this->filetype_icon_path.'directory.png" alt="'.$title.'"/>';
       } else {
         switch(strtolower($type)) {
           case 'jpg':
@@ -145,7 +147,7 @@
           case 'jpeg':
           case 'jpe':
           $tn = new Thumbnail($file, $this->thumbnail_width, $this->thumbnail_height, $this->thumbnail_quality);
-          if ($tn) $href .= '<img src="'.rawurlencode($tn->getPath()).'" alt="'.$file.'"/>';
+          if ($tn) $href .= '<img src="'.rawurlencode($tn->getPath()).'" alt="'.$title.'"/>';
           break;
   
           case 'txt':
@@ -182,7 +184,7 @@
             exec("gs -q -dNOPAUSE -dBATCH -sDEVICE=jpeg -sOutputFile=\"$output\" \"$file\"");
             exec("convert -resize 50x75 \"$output\" \"$output\"");
           }  
-          $href .= '<img src="'.rawurlencode($output).'" alt="'.$file.'"/>';
+          $href .= '<img src="'.rawurlencode($output).'" alt="'.$title.'"/>';
           break;
   
           default:

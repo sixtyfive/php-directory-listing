@@ -1,3 +1,8 @@
+0.3.7
+=====
+* Showing page title and file/directory names as UTF-8 correctly.
+* Escaping with htmlspecialchars() for all displays of file/directory names.
+
 0.3.6
 =====
 * Adding controls bar at page bottom.

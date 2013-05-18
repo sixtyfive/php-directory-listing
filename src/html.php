@@ -9,7 +9,8 @@
 
 <html lang='en' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
   <head>
-    <title><?php echo $pdl->title(); ?></title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title><?php echo utf8_encode($pdl->title()); ?></title>
     <?php echo $pdl->stylesheet_link_tags(); ?>
     <?php echo $pdl->javascript_include_tags(); ?>
     <?php if ($pdl->getConfig('general', 'interface') == 'gallery') { ?>
