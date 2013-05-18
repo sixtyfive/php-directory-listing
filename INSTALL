@@ -7,8 +7,8 @@ LigHTTPd:
 - Only if you cloned via Git: don't forget to do "git submodule init" and "git
   submodule update" in order to get the thirdparty components!
 
-- Create a publicly accessible directory inside your webroot and link src, icons
-  and thirdparty into it. For protection, it might be wise to add an empty
+- Create a publicly accessible directory inside your webroot and link src, icons,
+  css and thirdparty into it. For protection, it might be wise to add an empty
   index.html, too.
 
 - Copy config.ini.template to config.ini and change according to your needs.

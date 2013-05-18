@@ -60,14 +60,14 @@
 
         /* set cache directory, cache file name for this thumbnail */
         $this->thumb_directory = /*dirname(__FILE__).$this->pd().*/$this->CACHE_DIRECTORY.$this->pd();
-        $this->thumb_name = $file.'.jpg-' // Creating .jpg's seems to be compatible with more server setups.
+        $this->thumb_name = $file.'-' // Creating .jpg's seems to be compatible with more server setups.
                            .$this->thumb_width.'x'
                            .$this->thumb_height.'@'
-                           .$this->thumb_quality;
+                           .$this->thumb_quality.'.jpg';
 
         /* make sure cache directory exists */
         if (! file_exists($this->thumb_directory))
-        mkdir ($this->thumb_directory, 0777);
+          mkdir ($this->thumb_directory, 0777);
 
         /* create thumbnail from scratch if it is not already cached */
         if (! is_file($this->thumb_directory.$this->thumb_name)) {
