@@ -32,3 +32,10 @@ download_caption = 'download all files'
 
 ; Your Google Analytics ID; e.g. "UA-12345678-1".
 account_id = ""
+
+[piwik]
+
+; Your Piwik Site ID; e.g. "1".
+site_id = ""
+; Your Piwik installation's domain, e.g. "piwik.domain.tld"
+fqdn=""

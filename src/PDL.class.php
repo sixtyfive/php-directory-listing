@@ -26,7 +26,17 @@
 
     public function getConfig($section, $setting)
     {
-      return $this->config[$section][$setting];
+      if ($setting) {
+        if (array_key_exists($section, $this->config) && array_key_exists($setting, $this->config[$section])) {
+          return $this->config[$section][$setting];
+        }
+      } else {
+        if (array_key_exists($section, $this->config)) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
 
     public function url()

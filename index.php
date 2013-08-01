@@ -4,7 +4,7 @@
    * Licensed under the GNU GPL, the version of your liking.
    * Do copy, share and modify! */
  
-  error_reporting(E_ALL);
+  error_reporting(E_ERROR | E_PARSE);
 
   function pd()
   {

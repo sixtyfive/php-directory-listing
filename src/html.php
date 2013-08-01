@@ -25,7 +25,8 @@
       </style>
     <?php } ?>
     <?php require_once path(__FILE__).'js.php'; ?>
-    <?php require_once path(__FILE__).'analytics.php'; ?>
+    <?php if ($pdl->getConfig('google_analytics')) require_once path(__FILE__).'analytics.php'; ?>
+    <?php if ($pdl->getConfig('piwik')) require_once path(__FILE__).'piwik.php'; ?>
   </head>
   <body>
     <div id="content">
