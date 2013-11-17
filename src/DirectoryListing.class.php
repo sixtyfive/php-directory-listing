@@ -117,7 +117,7 @@
       
       @closedir($dir_handle);
 
-      // create zip archive from the whole folder
+      // Create zip archive from folder contents.
       if($download) {
         $this->zipDir($path, '.zip'.pd().$title.'.zip');
         echo '
@@ -135,6 +135,32 @@
       }
     }
 
+    // With thanks to Riccardo Galli (see http://stackoverflow.com/questions/1091107/how-to-join-filesystem-path-strings-in-php).
+    function join_paths() {
+      $paths = array();
+      foreach (func_get_args() as $arg) {
+        if ($arg !== '') { $paths[] = $arg; }
+      }
+      return preg_replace('#/+#','/',join('/', $paths));
+    }
+
+    // Link absolutely so as to stay clear of problems with missing slashes behind directory names.
+    // REQUEST_URI is being stripped of the query string and also escaped as it could be maliciously
+    // exploited otherwise.
+    function display($file)
+    {
+      return $this->join_paths(htmlspecialchars(strtok($_SERVER['REQUEST_URI'], '?')), rawurlencode($file));
+    }
+
+    function jpegcaption($file)
+    {
+      $exif = read_exif_data($file, 'EXIF');
+      
+      if ($exif && $exif['ImageDescription']) {
+        return $exif['ImageDescription'];
+      }
+    }
+
     function href($file, $url, $filenames)
     {
       $type = $this->type($file);
@@ -143,20 +169,24 @@
       $fancybox_tag = FALSE;
       if (!is_dir($file)) {
         switch(strtolower($type)) {
-          case 'jpg':
           case 'png':
           case 'gif':
+          $fancybox_tag = TRUE;
+          break;
+
+          case 'jpg':
           case 'jpeg':
           case 'jpe':
           $fancybox_tag = TRUE;
+          $caption = $this->jpegcaption($file);
           break;
         }
       }; if ($fancybox_tag == TRUE) {
         $href = '<div class="thumbnail image"><div class="rightlimit"></div><div class="bottomlimit"></div>';
-        $href .= '<a class="fancybox" rel="group" href="'.rawurlencode($file).'" title="'.$title.'">';
+        $href .= '<a class="fancybox" rel="group" href="'.$this->display($file).'" title="'.($caption ? $caption : $title).'">';
       } else {
         $href = '<div class="thumbnail icon"><div class="rightlimit"></div><div class="bottomlimit"></div>';
-        $href .= '<a href="'.rawurlencode($file).'" title="'.$title.'">';
+        $href .= '<a href="'.$this->display($file).'" title="'.$title.'">';
       }
 
       if (is_dir($file)) {
@@ -169,9 +199,9 @@
           case 'jpeg':
           case 'jpe':
           $tn = new Thumbnail($file, $this->thumbnail_width, $this->thumbnail_height, $this->thumbnail_quality);
-          if ($tn) $href .= '<img src="'.str_replace('%2F', '/', rawurlencode($tn->getPath())).'" alt="'.$file.'"/>';
+          if ($tn) $href .= '<img src="'.str_replace('%2F', '/', $this->display($tn->getPath())).'" alt="'.$file.'"/>';
           break;
-  
+          
           case 'txt':
           case 'html':
           case 'c':
@@ -200,13 +230,15 @@
           }
           break;
           
+          // FIXME: The PDF thumbnail generation should really, 
+          //        really be part of the Thumbnail class! -JRS
           case 'pdf':
           $output = ".thumbnails/".basename(str_replace(".pdf", ".jpg", $file));
           if (!file_exists($output)) {
             exec("gs -q -dNOPAUSE -dBATCH -sDEVICE=jpeg -sOutputFile=\"$output\" \"$file\"");
             exec("convert -resize 50x75 \"$output\" \"$output\"");
           }  
-          $href .= '<img src="'.str_replace('%2F', '/', rawurlencode($output)).'" alt="'.$file.'"/>';
+          $href .= '<img src="'.str_replace('%2F', '/', $this->display($output)).'" alt="'.$file.'"/>';
           break;
   
           default:
@@ -232,7 +264,7 @@
         if ($type) $type = '<span class="hidden">'.$type.'</span>';
         if (strlen($file) > $this->max_filename_length) $type = '&hellip;'.$type;
         else if ($type) $type = '.'.$type;
-        $href .= '<a href="'.rawurlencode($file).'">';
+        $href .= '<a href="'.$this->display($file).'">';
         $href .= $link_text.$type."</a>"; 
         if (is_dir($file)) $href .= "</a>";
       }
@@ -285,6 +317,9 @@
         $file = str_replace('\\', '/', $file);
 
         // Ignore EXCLUDE_FILES
+        // FIXME: including .thumbnails manually shouldn't be necessary here
+        //        as it is already part of EXCLUDE_FILS. Is there any reason
+        //        for this? -JRS
         if(in_array(substr($file, strrpos($file, '/')+1), $this->EXCLUDE_FILES) ||
           strpos($file, '/.thumbnails/') ||
           strpos($file, '/.zip/'))
