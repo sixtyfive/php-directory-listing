@@ -1,4 +1,4 @@
-<?
+<?php
   /*
   Copyright (C) 2005 and onwards, Raphael J. Schmid <rjs@schattenschreiber.org>
   Licensed under the GNU GPL, the version of your liking.
